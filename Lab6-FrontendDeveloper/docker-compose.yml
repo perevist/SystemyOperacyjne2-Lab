@@ -1,0 +1,27 @@
+version: "3.8"
+services: 
+    postgres-db:
+        build: ./database
+        volumes: 
+            - data:/var/lib/postgresql/data
+    backend:
+        build: ./backend
+        depends_on:
+            - postgres-db
+        ports: 
+            - '5000:5000'  
+    frontend1:
+        build: ./frontend
+        ports: 
+            - '3000:80'
+        depends_on: 
+            - backend
+    frontend2:
+        build: ./frontend
+        ports: 
+            - '4000:80'
+        depends_on: 
+            - backend
+
+volumes:
+    data: 
